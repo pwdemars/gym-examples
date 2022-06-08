@@ -32,7 +32,7 @@ class GridWorldEnv(gym.Env):
             0: np.array([1, 0]),
             1: np.array([0, 1]),
             2: np.array([-1, 0]),
-            3: np.array([0, -1]),
+            3: np.array([0, -1])
         }
 
         """
@@ -55,7 +55,7 @@ class GridWorldEnv(gym.Env):
             )
         }
 
-    def reset(self, seed=None, return_info=False, options=None):
+    def reset(self, seed=None, return_info=False, options=None, fixed_location=True):
         # We need the following line to seed self.np_random
         super().reset(seed=seed)
 
@@ -66,6 +66,9 @@ class GridWorldEnv(gym.Env):
         self._target_location = self._agent_location
         while np.array_equal(self._target_location, self._agent_location):
             self._target_location = self.np_random.integers(0, self.size, size=2)
+            
+        # Fixed location (overrides target location above)
+        self._target_location = np.array([0, 0])
 
         observation = self._get_obs()
         info = self._get_info()
