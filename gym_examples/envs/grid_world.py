@@ -56,16 +56,13 @@ class GridWorldEnv(gym.Env):
         }
 
     def reset(self, seed=None, return_info=False, options=None, fixed_location=True):
-        # We need the following line to seed self.np_random
-        super().reset(seed=seed)
-
         # Choose the agent's location uniformly at random
-        self._agent_location = self.np_random.integers(0, self.size, size=2)
+        self._agent_location = np.random.randint(0, self.size, size=2)
 
         # We will sample the target's location randomly until it does not coincide with the agent's location
         self._target_location = self._agent_location
         while np.array_equal(self._target_location, self._agent_location):
-            self._target_location = self.np_random.integers(0, self.size, size=2)
+            self._target_location = np.random.randint(0, self.size, size=2)
             
         # Fixed location (overrides target location above)
         self._target_location = np.array([0, 0])
